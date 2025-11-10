@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import ChatBot from "./ChatBot";
+import { ChatBot } from "./components";
 import "./ChatBot.css";
 import "./index.css";
 
