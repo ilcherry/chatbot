@@ -24,7 +24,7 @@ export default defineConfig({
           return assetInfo.name === "style.css"
             ? "chatbot-widget.css"
             : "[name].[ext]";
-        },4
+        },
       },
     },
     cssCodeSplit: false,
