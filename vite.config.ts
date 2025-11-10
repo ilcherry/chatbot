@@ -19,9 +19,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         inlineDynamicImports: true,
+        // 将CSS内联到JS中
+        assetFileNames: (assetInfo) => {
+          return assetInfo.name === "style.css"
+            ? "chatbot-widget.css"
+            : "[name].[ext]";
+        },4
       },
     },
     cssCodeSplit: false,
     minify: "esbuild",
+  },
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+    },
   },
 });

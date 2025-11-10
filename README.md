@@ -22,8 +22,8 @@ pnpm build
 ```
 
 构建完成后，会在 `dist/` 目录下生成以下文件：
-- `chatbot-widget.iife.js` - 主要的JavaScript bundle文件
-- `chatbot-widget.css` - 样式文件（需要单独引入）
+- `chatbot-widget.iife.js` - 主bundle文件（包含所有功能，207KB）
+- `chatbot-widget.css` - 样式文件（自动注入到iframe中）
 
 ## 🚀 使用方法
 
@@ -36,13 +36,11 @@ pnpm build
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的网站</title>
-  <!-- 引入ChatBot Widget样式 -->
-  <link rel="stylesheet" href="./dist/chatbot-widget.css">
 </head>
 <body>
   <!-- 你的网页内容 -->
   
-  <!-- 引入ChatBot Widget脚本 -->
+  <!-- 引入ChatBot Widget（一个文件包含所有功能） -->
   <script src="./dist/chatbot-widget.iife.js"></script>
   
   <!-- 初始化ChatBot -->
@@ -62,9 +60,7 @@ pnpm build
 如果你将文件部署到CDN，可以这样使用：
 
 ```html
-<!-- 引入CSS -->
-<link rel="stylesheet" href="https://your-cdn.com/chatbot-widget.css">
-<!-- 引入JS -->
+<!-- 只需引入一个JS文件 -->
 <script src="https://your-cdn.com/chatbot-widget.iife.js"></script>
 <script>
   const chatbot = new ChatBotWidget({

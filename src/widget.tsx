@@ -11,9 +11,11 @@ interface ChatBotWidgetConfig {
 }
 
 class ChatBotWidget {
-  private root: ReactDOM.Root | null = null;
+  private iframe: HTMLIFrameElement | null = null;
   private container: HTMLElement | null = null;
+  private button: HTMLElement | null = null;
   private isOpen: boolean = false;
+  private isLoaded: boolean = false;
   private config: ChatBotWidgetConfig;
 
   constructor(config: ChatBotWidgetConfig = {}) {
@@ -22,6 +24,78 @@ class ChatBotWidget {
       autoOpen: false,
       ...config,
     };
+
+    // 监听来自iframe的消息
+    this.setupMessageListener();
+  }
+
+  /**
+   * 设置消息监听器，接收来自iframe的消息
+   */
+  private setupMessageListener() {
+    window.addEventListener("message", (event) => {
+      // 安全检查：只接受来自我们iframe的消息
+      if (event.data && event.data.type === "CHATBOT_CLOSE") {
+        this.close();
+      }
+    });
+  }
+
+  /**
+   * 生成iframe的HTML内容
+   * 直接在iframe中引用CSS文件
+   */
+  private getIframeHTML(): string {
+    // 获取CSS文件路径
+    const cssPath = this.getCSSPath();
+
+    return `
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatBot</title>
+  <link rel="stylesheet" href="${cssPath}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #chatbot-root {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatbot-root"></div>
+</body>
+</html>
+    `;
+  }
+
+  /**
+   * 获取CSS文件路径
+   */
+  private getCSSPath(): string {
+    // 尝试从当前脚本路径推断CSS路径
+    const scripts = document.getElementsByTagName("script");
+    for (let i = 0; i < scripts.length; i++) {
+      const src = scripts[i].src;
+      if (src && src.includes("chatbot-widget")) {
+        // 将 chatbot-widget.iife.js 替换为 chatbot-widget.css
+        return src.replace("chatbot-widget.iife.js", "chatbot-widget.css");
+      }
+    }
+    // 默认路径
+    return "./dist/chatbot-widget.css";
   }
 
   init() {
@@ -31,13 +105,13 @@ class ChatBotWidget {
     this.container.style.cssText = this.getContainerStyles();
     document.body.appendChild(this.container);
 
-    // 创建打开按钮
-    const button = document.createElement("div");
-    button.id = "chatbot-widget-button";
-    button.style.cssText = this.getButtonStyles();
-    button.innerHTML = this.getButtonHTML();
-    button.onclick = () => this.toggle();
-    document.body.appendChild(button);
+    // 创建聊天气泡按钮
+    this.button = document.createElement("div");
+    this.button.id = "chatbot-widget-button";
+    this.button.style.cssText = this.getButtonStyles();
+    this.button.innerHTML = this.getButtonHTML();
+    this.button.onclick = () => this.toggle();
+    document.body.appendChild(this.button);
 
     // 如果设置了自动打开
     if (this.config.autoOpen) {
@@ -52,6 +126,11 @@ class ChatBotWidget {
       z-index: 999999;
       display: none;
       animation: slideIn 0.3s ease;
+      width: 400px;
+      height: 600px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
     `;
 
     const positions = {
@@ -108,20 +187,89 @@ class ChatBotWidget {
     this.isOpen = true;
     this.container.style.display = "block";
 
-    // 创建React根节点（如果还没有创建）
-    if (!this.root) {
-      this.root = ReactDOM.createRoot(this.container);
-      this.root.render(
-        <React.StrictMode>
-          <ChatBot onClose={() => this.close()} />
-        </React.StrictMode>
-      );
+    // 隐藏按钮
+    if (this.button) {
+      this.button.style.display = "none";
     }
 
-    // 隐藏按钮
-    const button = document.getElementById("chatbot-widget-button");
-    if (button) {
-      button.style.display = "none";
+    // 如果iframe还未创建，创建并加载
+    if (!this.isLoaded) {
+      this.createIframe();
+      this.isLoaded = true;
+    }
+  }
+
+  /**
+   * 创建iframe并加载ChatBot
+   */
+  private createIframe() {
+    if (!this.container) return;
+
+    // 清空容器
+    this.container.innerHTML = "";
+
+    // 创建iframe，使用srcdoc直接嵌入HTML内容
+    this.iframe = document.createElement("iframe");
+    this.iframe.id = "chatbot-widget-iframe";
+    this.iframe.srcdoc = this.getIframeHTML();
+    this.iframe.style.cssText = `
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    `;
+
+    // 设置iframe属性以提高安全性
+    this.iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+    this.iframe.setAttribute("title", "ChatBot Widget");
+
+    this.container.appendChild(this.iframe);
+
+    // 等待iframe加载完成后渲染ChatBot
+    this.iframe.onload = () => {
+      this.renderChatBotInIframe();
+    };
+  }
+
+  /**
+   * 在iframe中渲染ChatBot组件
+   */
+  private renderChatBotInIframe() {
+    if (!this.iframe || !this.iframe.contentWindow) return;
+
+    try {
+      const iframeDocument = this.iframe.contentDocument;
+
+      if (!iframeDocument) {
+        console.error("Cannot access iframe document");
+        return;
+      }
+
+      // 在iframe中创建React根节点
+      const rootElement = iframeDocument.getElementById("chatbot-root");
+      if (!rootElement) {
+        console.error("ChatBot root element not found in iframe");
+        return;
+      }
+
+      const root = ReactDOM.createRoot(rootElement);
+
+      // 渲染ChatBot组件
+      root.render(
+        <React.StrictMode>
+          <ChatBot
+            onClose={() => {
+              // 关闭聊天窗口
+              this.close();
+            }}
+          />
+        </React.StrictMode>
+      );
+
+      console.log("ChatBot rendered successfully in iframe");
+    } catch (error) {
+      console.error("Failed to render ChatBot in iframe:", error);
+      this.showError();
     }
   }
 
@@ -132,9 +280,8 @@ class ChatBotWidget {
     this.container.style.display = "none";
 
     // 显示按钮
-    const button = document.getElementById("chatbot-widget-button");
-    if (button) {
-      button.style.display = "flex";
+    if (this.button) {
+      this.button.style.display = "flex";
     }
   }
 
@@ -146,19 +293,53 @@ class ChatBotWidget {
     }
   }
 
+  /**
+   * 显示错误状态
+   */
+  private showError() {
+    if (!this.container) return;
+
+    this.container.innerHTML = `
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        background: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      ">
+        <div style="font-size: 48px; color: #ff6b6b;">⚠️</div>
+        <p style="color: #ff6b6b; margin-top: 20px;">加载失败，请刷新页面重试</p>
+        <button onclick="location.reload()" style="
+          margin-top: 20px;
+          padding: 10px 20px;
+          background: #5b6fd8;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        ">刷新页面</button>
+      </div>
+    `;
+  }
+
   destroy() {
-    if (this.root) {
-      this.root.unmount();
-      this.root = null;
+    if (this.iframe) {
+      this.iframe.remove();
+      this.iframe = null;
     }
     if (this.container) {
       document.body.removeChild(this.container);
       this.container = null;
     }
-    const button = document.getElementById("chatbot-widget-button");
-    if (button) {
-      document.body.removeChild(button);
+    if (this.button) {
+      document.body.removeChild(this.button);
+      this.button = null;
     }
+    this.isLoaded = false;
+    this.isOpen = false;
   }
 }
 
