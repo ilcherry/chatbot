@@ -20,6 +20,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onClose, onMinimize }) => {
     messages,
     inputValue,
     activeTab,
+    unreadCount,
     setInputValue,
     setActiveTab,
     handleSend,
@@ -36,6 +37,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onClose, onMinimize }) => {
         onTabChange={setActiveTab}
         onClose={onClose}
         onMinimize={onMinimize}
+        unreadCount={unreadCount}
       />
       <MessageList messages={messages} onQuickAction={handleQuickAction} />
       <ChatInput

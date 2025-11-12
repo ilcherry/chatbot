@@ -45,6 +45,7 @@ export interface ChatHeaderProps {
   onTabChange: (tab: TabType) => void;
   onClose?: () => void;
   onMinimize?: () => void;
+  unreadCount?: number;
 }
 
 /**

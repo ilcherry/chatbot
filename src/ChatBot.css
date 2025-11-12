@@ -43,6 +43,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .tab:hover {
@@ -53,6 +54,22 @@
 .tab.active {
   background: rgba(255, 255, 255, 0.3);
   color: white;
+}
+
+.unread-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: #ff4444;
+  color: white;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  margin-left: 2px;
 }
 
 .header-actions {
@@ -719,4 +736,3 @@
     max-height: 200px;
   }
 }
-

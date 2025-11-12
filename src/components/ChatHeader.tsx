@@ -10,11 +10,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   onTabChange,
   onClose,
   onMinimize,
+  unreadCount = 2,
 }) => {
   return (
     <div className="chatbot-header">
       <div className="header-top">
         <div className="header-tabs">
+          {/* 消息 */}
           <button
             className={`tab ${activeTab === "message" ? "active" : ""}`}
             onClick={() => onTabChange("message")}
@@ -23,6 +25,11 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
               <path d="M2 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4.5l-2.5 2V3z" />
             </svg>
             消息
+            {unreadCount > 0 && (
+              <span className="unread-badge">
+                {unreadCount > 99 ? "99+" : unreadCount}
+              </span>
+            )}
           </button>
           <button
             className={`tab ${activeTab === "help" ? "active" : ""}`}

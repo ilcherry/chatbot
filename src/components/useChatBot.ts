@@ -58,6 +58,18 @@ export const useChatBot = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputValue, setInputValue] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("message");
+  const [unreadCount, setUnreadCount] = useState(2);
+
+  /**
+   * 切换标签页
+   */
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    // 切换到消息标签时，清零未读消息数
+    if (tab === "message") {
+      setUnreadCount(0);
+    }
+  };
 
   /**
    * 发送消息
@@ -85,6 +97,8 @@ export const useChatBot = () => {
         timestamp,
       };
       setMessages((prev) => [...prev, botReply]);
+      // 如果不在消息标签页，增加未读计数
+      setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
     }, 1000);
   };
 
@@ -112,6 +126,8 @@ export const useChatBot = () => {
         timestamp,
       };
       setMessages((prev) => [...prev, botReply]);
+      // 如果不在消息标签页，增加未读计数
+      setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
     }, 1000);
   };
 
@@ -134,7 +150,7 @@ export const useChatBot = () => {
     try {
       const timestamp = generateTimestamp();
       const url = await fileToDataURL(file);
-      
+
       const content: MessageContent[] = [
         {
           type: "image",
@@ -162,6 +178,8 @@ export const useChatBot = () => {
           timestamp,
         };
         setMessages((prev) => [...prev, botReply]);
+        // 如果不在消息标签页，增加未读计数
+        setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
       }, 1000);
     } catch (error) {
       console.error("图片上传失败:", error);
@@ -176,7 +194,7 @@ export const useChatBot = () => {
     try {
       const timestamp = generateTimestamp();
       const url = await fileToDataURL(file);
-      
+
       const content: MessageContent[] = [
         {
           type: "video",
@@ -204,6 +222,8 @@ export const useChatBot = () => {
           timestamp,
         };
         setMessages((prev) => [...prev, botReply]);
+        // 如果不在消息标签页，增加未读计数
+        setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
       }, 1000);
     } catch (error) {
       console.error("视频上传失败:", error);
@@ -218,7 +238,7 @@ export const useChatBot = () => {
     try {
       const timestamp = generateTimestamp();
       const url = await fileToDataURL(file);
-      
+
       const content: MessageContent[] = [
         {
           type: "file",
@@ -246,6 +266,8 @@ export const useChatBot = () => {
           timestamp,
         };
         setMessages((prev) => [...prev, botReply]);
+        // 如果不在消息标签页，增加未读计数
+        setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
       }, 1000);
     } catch (error) {
       console.error("文件上传失败:", error);
@@ -257,8 +279,9 @@ export const useChatBot = () => {
     messages,
     inputValue,
     activeTab,
+    unreadCount,
     setInputValue,
-    setActiveTab,
+    setActiveTab: handleTabChange,
     handleSend,
     handleQuickAction,
     handleImageUpload,
