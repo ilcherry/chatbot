@@ -74,7 +74,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist # 构建输出目录
           publish_branch: v${{ env.VERSION }}
-          force_orphan: true # 强制创建孤立分支
 
       # 步骤7: 等待CDN缓存更新
       - name: Wait for CDN propagation
