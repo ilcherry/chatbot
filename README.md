@@ -10,6 +10,7 @@
 - ⚡ **轻量高效** - 单一JS文件加载，无需额外依赖
 - 🔧 **易于集成** - 只需几行代码即可集成到任何网站
 - 🌐 **多社交渠道** - 集成微信、WhatsApp、Telegram等社交平台
+- 📢 **系统消息** - 支持居中显示的系统通知消息（新增）
 
 ## 📦 构建
 
@@ -89,10 +90,11 @@ chatbot.destroy();
 
 ## 🧪 测试
 
-项目包含两个测试页面：
+项目包含多个测试页面：
 
 - `test.html` - 完整的功能演示页面
 - `test-simple.html` - 简单的测试页面，用于验证错误修复
+- `test-system-message.html` - 系统消息功能演示页面（新增）
 
 ### 运行测试页面
 
@@ -110,6 +112,7 @@ php -S localhost:8080
 然后在浏览器中打开：
 - `http://localhost:8080/test.html` - 完整演示
 - `http://localhost:8080/test-simple.html` - 简单测试
+- `http://localhost:8080/test-system-message.html` - 系统消息演示
 
 ## ⚙️ 配置选项
 
@@ -177,6 +180,34 @@ pnpm build
 pnpm preview
 ```
 
+## 📢 系统消息功能
+
+系统消息是一种特殊的消息类型，用于显示系统通知、状态更新等信息。
+
+### 使用方法
+
+```typescript
+// 创建系统消息
+const systemMessage = {
+  id: 1,
+  type: "system",  // 设置类型为 system
+  content: "🟢 客服已上线",
+  timestamp: "09:00"
+};
+```
+
+### 典型场景
+
+- 客服上线/离线通知
+- 会话保存提示
+- 转接人工客服通知
+- 系统维护提醒
+- 响应时间统计
+
+### 详细文档
+
+查看 [系统消息使用指南](./SYSTEM_MESSAGE_GUIDE.md) 了解更多信息和最佳实践。
+
 ## 🎨 自定义样式
 
 你可以通过修改 `src/ChatBot.css` 来自定义聊天机器人的样式。主要的颜色变量：
@@ -187,6 +218,13 @@ background: linear-gradient(135deg, #5b6fd8 0%, #4a5fc7 100%);
 
 /* 悬停效果 */
 box-shadow: 0 4px 12px rgba(91, 111, 216, 0.4);
+
+/* 系统消息样式（新增） */
+.system-message-text {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+  font-size: 12px;
+}
 ```
 
 ## 📄 许可证

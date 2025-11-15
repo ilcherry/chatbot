@@ -27,7 +27,7 @@ const getBotReply = (action: string): string => {
 };
 
 /**
- * 初始消息列表
+ * 初始消息列表（包含系统消息示例）
  */
 const initialMessages: Message[] = [
   {
@@ -38,15 +38,21 @@ const initialMessages: Message[] = [
   },
   {
     id: 2,
-    type: "bot",
-    content: "salesmartly使用指南",
-    timestamp: "11-10 16:27:52",
+    type: "system",
+    content: "🟢 客服已上线",
+    timestamp: "11-10 16:27:53",
   },
   {
     id: 3,
     type: "bot",
+    content: "salesmartly使用指南",
+    timestamp: "11-10 16:27:54",
+  },
+  {
+    id: 4,
+    type: "bot",
     content: "使用常见问题",
-    timestamp: "11-10 16:27:52",
+    timestamp: "11-10 16:27:54",
   },
 ];
 
@@ -88,10 +94,21 @@ export const useChatBot = () => {
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
 
+    // 添加系统消息：消息已接收
+    setTimeout(() => {
+      const systemMessage: Message = {
+        id: messages.length + 2,
+        type: "system",
+        content: "💾 消息已保存",
+        timestamp: "",
+      };
+      setMessages((prev) => [...prev, systemMessage]);
+    }, 500);
+
     // 模拟机器人回复
     setTimeout(() => {
       const botReply: Message = {
-        id: messages.length + 2,
+        id: messages.length + 3,
         type: "bot",
         content: "感谢您的消息！我们会尽快回复您。",
         timestamp,
@@ -99,7 +116,7 @@ export const useChatBot = () => {
       setMessages((prev) => [...prev, botReply]);
       // 如果不在消息标签页，增加未读计数
       setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
-    }, 1000);
+    }, 1500);
   };
 
   /**
@@ -116,11 +133,22 @@ export const useChatBot = () => {
 
     setMessages((prev) => [...prev, userMessage]);
 
+    // 添加系统消息：正在处理
+    setTimeout(() => {
+      const systemMessage: Message = {
+        id: messages.length + 2,
+        type: "system",
+        content: "⚡ 正在为您查询...",
+        timestamp: "",
+      };
+      setMessages((prev) => [...prev, systemMessage]);
+    }, 300);
+
     // 模拟机器人回复
     setTimeout(() => {
       const reply = getBotReply(action);
       const botReply: Message = {
-        id: messages.length + 2,
+        id: messages.length + 3,
         type: "bot",
         content: reply,
         timestamp,
@@ -128,7 +156,7 @@ export const useChatBot = () => {
       setMessages((prev) => [...prev, botReply]);
       // 如果不在消息标签页，增加未读计数
       setUnreadCount((prev) => (activeTab !== "message" ? prev + 1 : prev));
-    }, 1000);
+    }, 1200);
   };
 
   /**

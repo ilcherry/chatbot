@@ -9,7 +9,7 @@ const formatFileSize = (bytes: number): string => {
   const k = 1024;
   const sizes = ["Bytes", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
 };
 
 /**
@@ -60,13 +60,20 @@ const renderMessageContent = (content: string | MessageContent[]) => {
             return (
               <div key={index} className="message-file">
                 <div className="message-file-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
                     <path d="M14 2v6h6" />
                   </svg>
                 </div>
                 <div className="message-file-info">
-                  <div className="message-file-name">{item.fileName || "文件"}</div>
+                  <div className="message-file-name">
+                    {item.fileName || "文件"}
+                  </div>
                   {item.fileSize && (
                     <div className="message-file-size">
                       {formatFileSize(item.fileSize)}
@@ -80,7 +87,12 @@ const renderMessageContent = (content: string | MessageContent[]) => {
                     className="message-file-download"
                     title="下载文件"
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                       <polyline points="7 10 12 15 17 10" />
                       <line x1="12" y1="15" x2="12" y2="3" />
@@ -105,6 +117,22 @@ const Message: React.FC<MessageProps> = ({ message, onQuickAction }) => {
   const { type, content, timestamp } = message;
   const isTextContent = typeof content === "string";
   const textContent = isTextContent ? content : "";
+
+  // 系统消息的特殊渲染
+  if (type === "system") {
+    return (
+      <div className="message system">
+        <div className="system-message-content">
+          <div className="system-message-text">
+            {renderMessageContent(content)}
+          </div>
+          {timestamp && (
+            <div className="system-message-timestamp">{timestamp}</div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`message ${type}`}>
@@ -136,4 +164,3 @@ const Message: React.FC<MessageProps> = ({ message, onQuickAction }) => {
 };
 
 export default Message;
-

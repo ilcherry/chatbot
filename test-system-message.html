@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>系统消息测试</title>
+    <link rel="stylesheet" href="./dist/chatbot-widget.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .test-info {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .test-info h2 {
+        margin: 0 0 12px 0;
+        color: #333;
+        font-size: 18px;
+      }
+      .test-info p {
+        margin: 0 0 8px 0;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .test-info ul {
+        margin: 12px 0 0 0;
+        padding-left: 20px;
+        color: #666;
+        font-size: 14px;
+      }
+      .test-info li {
+        margin: 6px 0;
+      }
+      .test-info code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #5b6fd8;
+      }
+      #chatbot-demo {
+        max-width: 400px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-info">
+      <h2>📝 系统消息测试页面</h2>
+      <p>本页面用于测试系统消息的显示效果</p>
+      <ul>
+        <li>系统消息使用 <code>type: "system"</code></li>
+        <li>显示在消息列表的中间位置</li>
+        <li>采用灰色背景，居中对齐</li>
+        <li>字体较小，适合展示系统通知</li>
+        <li>支持时间戳显示（可选）</li>
+      </ul>
+      <p style="margin-top: 12px">
+        <strong>示例场景：</strong>客服上线通知、会话保存提示、转接提示等
+      </p>
+    </div>
+
+    <div id="chatbot-demo"></div>
+
+    <script type="module">
+      import React from "react";
+      import ReactDOM from "react-dom/client";
+      import { ChatBot } from "./src/components/index.ts";
+
+      // 创建一个演示的消息列表，包含系统消息
+      const DemoApp = () => {
+        const [messages, setMessages] = React.useState([
+          {
+            id: 1,
+            type: "bot",
+            content: "你好！我是智能客服助手 👋",
+            timestamp: "09:00",
+          },
+          {
+            id: 2,
+            type: "system",
+            content: "🟢 客服已上线",
+            timestamp: "09:01",
+          },
+          {
+            id: 3,
+            type: "user",
+            content: "你好，我想咨询一个问题",
+            timestamp: "09:02",
+          },
+          {
+            id: 4,
+            type: "bot",
+            content: "当然！请问有什么可以帮助您的？😊",
+            timestamp: "09:02",
+          },
+          {
+            id: 5,
+            type: "system",
+            content: "💾 会话已自动保存",
+            timestamp: "09:03",
+          },
+          {
+            id: 6,
+            type: "user",
+            content: "关于产品价格的问题",
+            timestamp: "09:03",
+          },
+          {
+            id: 7,
+            type: "system",
+            content: "🔄 正在为您转接人工客服...",
+            timestamp: "09:04",
+          },
+          {
+            id: 8,
+            type: "bot",
+            content: "好的，我来为您解答产品价格相关的问题",
+            timestamp: "09:04",
+          },
+          {
+            id: 9,
+            type: "system",
+            content: "⚡ 客服响应时间: 2秒",
+          },
+          {
+            id: 10,
+            type: "bot",
+            content:
+              "您可以访问我们的官网查看详细价格，或者告诉我您感兴趣的具体产品。",
+            timestamp: "09:05",
+          },
+        ]);
+
+        return React.createElement(ChatBot, {
+          onClose: () => console.log("关闭"),
+          onMinimize: () => console.log("最小化"),
+        });
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("chatbot-demo"));
+      root.render(React.createElement(DemoApp));
+    </script>
+  </body>
+</html>

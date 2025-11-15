@@ -19,7 +19,7 @@ export interface MessageContent {
  */
 export interface Message {
   id: number;
-  type: "bot" | "user";
+  type: "bot" | "user" | "system";
   content: string | MessageContent[];
   timestamp: string;
 }
@@ -89,4 +89,3 @@ export interface ConfirmDialogProps {
   onCancel: () => void;
   icon?: React.ReactNode;
 }
-
