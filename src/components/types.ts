@@ -76,3 +76,17 @@ export interface ChatInputProps {
   onFileUpload?: (file: File) => void;
 }
 
+/**
+ * ConfirmDialog 组件属性
+ */
+export interface ConfirmDialogProps {
+  isOpen: boolean;
+  title?: string;
+  message?: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  icon?: React.ReactNode;
+}
+

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ChatHeaderProps } from "./types";
+import ConfirmDialog from "./ConfirmDialog";
 
 /**
  * 聊天头部组件
@@ -12,6 +13,36 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   onMinimize,
   unreadCount = 2,
 }) => {
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  // 处理关闭按钮点击
+  const handleCloseClick = () => {
+    setShowConfirmDialog(true);
+  };
+
+  // 确认关闭
+  const handleConfirmClose = () => {
+    setShowConfirmDialog(false);
+    onClose?.();
+  };
+
+  // 取消关闭
+  const handleCancelClose = () => {
+    setShowConfirmDialog(false);
+  };
+
+  // 警告图标
+  const warningIcon = (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="20" stroke="#ff6b6b" strokeWidth="2" />
+      <path
+        d="M24 14v14M24 32v2"
+        stroke="#ff6b6b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
   return (
     <div className="chatbot-header">
       <div className="header-top">
@@ -52,7 +83,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           </button>
 
           {/* 关闭按钮 */}
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn" onClick={handleCloseClick}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
             </svg>
@@ -93,6 +124,18 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           </svg>
         </a>
       </div> */}
+
+      {/* 确认关闭对话框 */}
+      <ConfirmDialog
+        isOpen={showConfirmDialog}
+        title="确认关闭会话"
+        message="关闭后将结束当前会话，聊天记录将被保存"
+        confirmText="确认关闭"
+        cancelText="取消"
+        icon={warningIcon}
+        onConfirm={handleConfirmClose}
+        onCancel={handleCancelClose}
+      />
     </div>
   );
 };

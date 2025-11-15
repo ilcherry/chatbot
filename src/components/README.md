@@ -13,6 +13,8 @@ src/components/
 ├── Message.tsx           # 单条消息组件
 ├── MessageList.tsx       # 消息列表组件
 ├── ChatInput.tsx         # 输入框组件
+├── EmojiPicker.tsx       # 表情选择器组件
+├── ConfirmDialog.tsx     # 确认对话框组件
 ├── useChatBot.ts         # 业务逻辑Hook
 ├── types.ts              # TypeScript类型定义
 ├── index.ts              # 统一导出
@@ -99,7 +101,60 @@ interface ChatInputProps {
 }
 ```
 
-### 6. useChatBot.ts - 业务逻辑Hook
+### 6. EmojiPicker.tsx - 表情选择器组件
+**职责**：显示表情选择器，支持分类浏览和搜索
+
+**特点**：
+- 支持多种表情分类（笑脸、手势、动物等）
+- 提供搜索功能
+- 点击表情后回调父组件
+
+**Props**：
+```typescript
+interface EmojiPickerProps {
+  onEmojiSelect: (emoji: string) => void;
+  onClose: () => void;
+}
+```
+
+### 7. ConfirmDialog.tsx - 确认对话框组件
+**职责**：显示确认对话框，用于重要操作的二次确认
+
+**特点**：
+- 可复用的通用对话框组件
+- 支持自定义标题、消息、按钮文本和图标
+- 带有淡入和滑动动画效果
+- 点击遮罩层可关闭
+
+**Props**：
+```typescript
+interface ConfirmDialogProps {
+  isOpen: boolean;          // 是否显示
+  title?: string;           // 标题
+  message?: string;         // 提示消息
+  confirmText?: string;     // 确认按钮文本
+  cancelText?: string;      // 取消按钮文本
+  onConfirm: () => void;    // 确认回调
+  onCancel: () => void;     // 取消回调
+  icon?: React.ReactNode;   // 自定义图标
+}
+```
+
+**使用示例**：
+```tsx
+<ConfirmDialog
+  isOpen={showDialog}
+  title="确认删除"
+  message="此操作不可恢复，确定要删除吗？"
+  confirmText="删除"
+  cancelText="取消"
+  icon={<WarningIcon />}
+  onConfirm={handleDelete}
+  onCancel={() => setShowDialog(false)}
+/>
+```
+
+### 8. useChatBot.ts - 业务逻辑Hook
 **职责**：管理消息状态、标签页状态和业务逻辑
 
 **特点**：
@@ -120,7 +175,7 @@ interface ChatInputProps {
 }
 ```
 
-### 7. types.ts - 类型定义
+### 9. types.ts - 类型定义
 **职责**：集中管理所有TypeScript类型定义
 
 **特点**：
