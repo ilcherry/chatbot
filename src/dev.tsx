@@ -4,7 +4,7 @@ import ChatBotWidget from './widget';
 import './ChatBot.css';
 import './index.css';
 
-function DevApp() {
+export function DevApp() {
   const [status, setStatus] = useState<string>('正在加载...');
   const [logs, setLogs] = useState<
     Array<{
@@ -65,8 +65,8 @@ function DevApp() {
 
       log('ChatBotWidget 初始化成功！', 'success');
       setStatus('✅ 成功！ChatBot Widget 已加载，没有 process.env 错误。');
-    } catch (error: any) {
-      const message = error?.message ?? String(error);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       log(`初始化失败: ${message}`, 'error');
       setStatus(`❌ 初始化失败: ${message}`);
     }
@@ -75,7 +75,9 @@ function DevApp() {
       try {
         widgetRef.current?.destroy();
         widgetRef.current = null;
-      } catch {}
+      } catch {
+        // 忽略清理时的错误
+      }
     };
   }, []);
 
@@ -87,8 +89,9 @@ function DevApp() {
     try {
       widgetRef.current.open();
       log('打开聊天窗口', 'success');
-    } catch (e: any) {
-      log(`打开失败: ${e?.message ?? String(e)}`, 'error');
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      log(`打开失败: ${message}`, 'error');
     }
   };
 
@@ -100,8 +103,9 @@ function DevApp() {
     try {
       widgetRef.current.close();
       log('关闭聊天窗口', 'success');
-    } catch (e: any) {
-      log(`关闭失败: ${e?.message ?? String(e)}`, 'error');
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      log(`关闭失败: ${message}`, 'error');
     }
   };
 
@@ -113,8 +117,9 @@ function DevApp() {
     try {
       widgetRef.current.toggle();
       log('切换聊天窗口状态', 'success');
-    } catch (e: any) {
-      log(`切换失败: ${e?.message ?? String(e)}`, 'error');
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      log(`切换失败: ${message}`, 'error');
     }
   };
 
