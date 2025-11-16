@@ -1,5 +1,5 @@
-import React from "react";
-import type { ConfirmDialogProps } from "./types";
+import React from 'react';
+import type { ConfirmDialogProps } from './types';
 
 /**
  * 确认对话框组件
@@ -7,10 +7,10 @@ import type { ConfirmDialogProps } from "./types";
  */
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
-  title = "确认操作",
+  title = '确认操作',
   message,
-  confirmText = "确认",
-  cancelText = "取消",
+  confirmText = '确认',
+  cancelText = '取消',
   onConfirm,
   onCancel,
   icon,
@@ -19,7 +19,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 
   return (
     <div className="confirm-dialog-overlay" onClick={onCancel}>
-      <div className="confirm-dialog" onClick={(e) => e.stopPropagation()}>
+      <div className="confirm-dialog" onClick={e => e.stopPropagation()}>
         {/* 图标 */}
         {icon && <div className="confirm-dialog-icon">{icon}</div>}
 

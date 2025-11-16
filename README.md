@@ -23,6 +23,7 @@ pnpm build
 ```
 
 构建完成后，会在 `dist/` 目录下生成以下文件：
+
 - `chatbot-widget.iife.js` - 主bundle文件（包含所有功能，207KB）
 - `chatbot-widget.css` - 样式文件（自动注入到iframe中）
 
@@ -33,26 +34,26 @@ pnpm build
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的网站</title>
-</head>
-<body>
-  <!-- 你的网页内容 -->
-  
-  <!-- 引入ChatBot Widget（一个文件包含所有功能） -->
-  <script src="./dist/chatbot-widget.iife.js"></script>
-  
-  <!-- 初始化ChatBot -->
-  <script>
-    const chatbot = new ChatBotWidget({
-      position: 'bottom-right', // 可选: 'bottom-right', 'bottom-left', 'top-right', 'top-left'
-      autoOpen: false // 是否自动打开
-    });
-    chatbot.init();
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的网站</title>
+  </head>
+  <body>
+    <!-- 你的网页内容 -->
+
+    <!-- 引入ChatBot Widget（一个文件包含所有功能） -->
+    <script src="./dist/chatbot-widget.iife.js"></script>
+
+    <!-- 初始化ChatBot -->
+    <script>
+      const chatbot = new ChatBotWidget({
+        position: 'bottom-right', // 可选: 'bottom-right', 'bottom-left', 'top-right', 'top-left'
+        autoOpen: false, // 是否自动打开
+      });
+      chatbot.init();
+    </script>
+  </body>
 </html>
 ```
 
@@ -66,7 +67,7 @@ pnpm build
 <script>
   const chatbot = new ChatBotWidget({
     position: 'bottom-right',
-    autoOpen: false
+    autoOpen: false,
   });
   chatbot.init();
 </script>
@@ -110,16 +111,17 @@ php -S localhost:8080
 ```
 
 然后在浏览器中打开：
+
 - `http://localhost:8080/test.html` - 完整演示
 - `http://localhost:8080/test-simple.html` - 简单测试
 - `http://localhost:8080/test-system-message.html` - 系统消息演示
 
 ## ⚙️ 配置选项
 
-| 选项 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `position` | `string` | `'bottom-right'` | 聊天按钮位置，可选值：`'bottom-right'`, `'bottom-left'`, `'top-right'`, `'top-left'` |
-| `autoOpen` | `boolean` | `false` | 是否在页面加载时自动打开聊天窗口 |
+| 选项       | 类型      | 默认值           | 说明                                                                                 |
+| ---------- | --------- | ---------------- | ------------------------------------------------------------------------------------ |
+| `position` | `string`  | `'bottom-right'` | 聊天按钮位置，可选值：`'bottom-right'`, `'bottom-left'`, `'top-right'`, `'top-left'` |
+| `autoOpen` | `boolean` | `false`          | 是否在页面加载时自动打开聊天窗口                                                     |
 
 ## 📁 项目结构
 
@@ -190,9 +192,9 @@ pnpm preview
 // 创建系统消息
 const systemMessage = {
   id: 1,
-  type: "system",  // 设置类型为 system
-  content: "🟢 客服已上线",
-  timestamp: "09:00"
+  type: 'system', // 设置类型为 system
+  content: '🟢 客服已上线',
+  timestamp: '09:00',
 };
 ```
 

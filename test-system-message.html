@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -9,8 +9,9 @@
       body {
         margin: 0;
         padding: 20px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          'Helvetica Neue', Arial, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         display: flex;
@@ -79,82 +80,82 @@
     <div id="chatbot-demo"></div>
 
     <script type="module">
-      import React from "react";
-      import ReactDOM from "react-dom/client";
-      import { ChatBot } from "./src/components/index.ts";
+      import React from 'react';
+      import ReactDOM from 'react-dom/client';
+      import { ChatBot } from './src/components/index.ts';
 
       // 创建一个演示的消息列表，包含系统消息
       const DemoApp = () => {
         const [messages, setMessages] = React.useState([
           {
             id: 1,
-            type: "bot",
-            content: "你好！我是智能客服助手 👋",
-            timestamp: "09:00",
+            type: 'bot',
+            content: '你好！我是智能客服助手 👋',
+            timestamp: '09:00',
           },
           {
             id: 2,
-            type: "system",
-            content: "🟢 客服已上线",
-            timestamp: "09:01",
+            type: 'system',
+            content: '🟢 客服已上线',
+            timestamp: '09:01',
           },
           {
             id: 3,
-            type: "user",
-            content: "你好，我想咨询一个问题",
-            timestamp: "09:02",
+            type: 'user',
+            content: '你好，我想咨询一个问题',
+            timestamp: '09:02',
           },
           {
             id: 4,
-            type: "bot",
-            content: "当然！请问有什么可以帮助您的？😊",
-            timestamp: "09:02",
+            type: 'bot',
+            content: '当然！请问有什么可以帮助您的？😊',
+            timestamp: '09:02',
           },
           {
             id: 5,
-            type: "system",
-            content: "💾 会话已自动保存",
-            timestamp: "09:03",
+            type: 'system',
+            content: '💾 会话已自动保存',
+            timestamp: '09:03',
           },
           {
             id: 6,
-            type: "user",
-            content: "关于产品价格的问题",
-            timestamp: "09:03",
+            type: 'user',
+            content: '关于产品价格的问题',
+            timestamp: '09:03',
           },
           {
             id: 7,
-            type: "system",
-            content: "🔄 正在为您转接人工客服...",
-            timestamp: "09:04",
+            type: 'system',
+            content: '🔄 正在为您转接人工客服...',
+            timestamp: '09:04',
           },
           {
             id: 8,
-            type: "bot",
-            content: "好的，我来为您解答产品价格相关的问题",
-            timestamp: "09:04",
+            type: 'bot',
+            content: '好的，我来为您解答产品价格相关的问题',
+            timestamp: '09:04',
           },
           {
             id: 9,
-            type: "system",
-            content: "⚡ 客服响应时间: 2秒",
+            type: 'system',
+            content: '⚡ 客服响应时间: 2秒',
           },
           {
             id: 10,
-            type: "bot",
+            type: 'bot',
             content:
-              "您可以访问我们的官网查看详细价格，或者告诉我您感兴趣的具体产品。",
-            timestamp: "09:05",
+              '您可以访问我们的官网查看详细价格，或者告诉我您感兴趣的具体产品。',
+            timestamp: '09:05',
           },
         ]);
 
         return React.createElement(ChatBot, {
-          onClose: () => console.log("关闭"),
-          onMinimize: () => console.log("最小化"),
+          onClose: () => console.log('关闭'),
+          onMinimize: () => console.log('最小化'),
         });
       };
 
-      const root = ReactDOM.createRoot(document.getElementById("chatbot-demo"));
+      const root = ReactDOM.createRoot(document.getElementById('chatbot-demo'));
       root.render(React.createElement(DemoApp));
     </script>
   </body>

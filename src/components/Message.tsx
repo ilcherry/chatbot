@@ -1,15 +1,15 @@
-import React from "react";
-import type { MessageProps, MessageContent } from "./types";
+import React from 'react';
+import type { MessageProps, MessageContent } from './types';
 
 /**
  * 格式化文件大小
  */
 const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return "0 Bytes";
+  if (bytes === 0) return '0 Bytes';
   const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
 };
 
 /**
@@ -17,7 +17,7 @@ const formatFileSize = (bytes: number): string => {
  */
 const renderMessageContent = (content: string | MessageContent[]) => {
   // 如果是字符串，直接返回文本
-  if (typeof content === "string") {
+  if (typeof content === 'string') {
     return <div className="message-text">{content}</div>;
   }
 
@@ -26,16 +26,16 @@ const renderMessageContent = (content: string | MessageContent[]) => {
     <div className="message-content-list">
       {content.map((item, index) => {
         switch (item.type) {
-          case "text":
+          case 'text':
             return (
               <div key={index} className="message-text">
                 {item.text}
               </div>
             );
-          case "image":
+          case 'image':
             return (
               <div key={index} className="message-media message-image">
-                <img src={item.url} alt={item.fileName || "图片"} />
+                <img src={item.url} alt={item.fileName || '图片'} />
                 {item.fileName && (
                   <div className="message-media-info">
                     {item.fileName}
@@ -44,7 +44,7 @@ const renderMessageContent = (content: string | MessageContent[]) => {
                 )}
               </div>
             );
-          case "video":
+          case 'video':
             return (
               <div key={index} className="message-media message-video">
                 <video controls src={item.url} />
@@ -56,7 +56,7 @@ const renderMessageContent = (content: string | MessageContent[]) => {
                 )}
               </div>
             );
-          case "file":
+          case 'file':
             return (
               <div key={index} className="message-file">
                 <div className="message-file-icon">
@@ -72,7 +72,7 @@ const renderMessageContent = (content: string | MessageContent[]) => {
                 </div>
                 <div className="message-file-info">
                   <div className="message-file-name">
-                    {item.fileName || "文件"}
+                    {item.fileName || '文件'}
                   </div>
                   {item.fileSize && (
                     <div className="message-file-size">
@@ -115,11 +115,11 @@ const renderMessageContent = (content: string | MessageContent[]) => {
  */
 const Message: React.FC<MessageProps> = ({ message, onQuickAction }) => {
   const { type, content, timestamp } = message;
-  const isTextContent = typeof content === "string";
-  const textContent = isTextContent ? content : "";
+  const isTextContent = typeof content === 'string';
+  const textContent = isTextContent ? content : '';
 
   // 系统消息的特殊渲染
-  if (type === "system") {
+  if (type === 'system') {
     return (
       <div className="message system">
         <div className="system-message-content">
@@ -136,7 +136,7 @@ const Message: React.FC<MessageProps> = ({ message, onQuickAction }) => {
 
   return (
     <div className={`message ${type}`}>
-      {type === "bot" && (
+      {type === 'bot' && (
         <div className="message-avatar">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="white">
             <circle cx="16" cy="12" r="4" />
@@ -146,9 +146,9 @@ const Message: React.FC<MessageProps> = ({ message, onQuickAction }) => {
       )}
       <div className="message-content">
         <div className="message-bubble">{renderMessageContent(content)}</div>
-        {type === "bot" &&
+        {type === 'bot' &&
           isTextContent &&
-          textContent !== "欢迎使用SaleSmarty" &&
+          textContent !== '欢迎使用SaleSmarty' &&
           onQuickAction && (
             <button
               className="quick-action-btn"

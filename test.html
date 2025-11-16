@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -12,8 +12,9 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-          "Helvetica", "Arial", sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica',
+          'Arial', sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         display: flex;
@@ -61,7 +62,7 @@
       }
 
       .demo-section h2::before {
-        content: "";
+        content: '';
         width: 4px;
         height: 24px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -136,7 +137,7 @@
       }
 
       .code-block code {
-        font-family: "Monaco", "Menlo", "Courier New", monospace;
+        font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
         font-size: 14px;
         color: #495057;
         line-height: 1.6;
@@ -326,9 +327,9 @@
       let chatbot;
 
       // 页面加载完成后初始化
-      window.addEventListener("DOMContentLoaded", function () {
+      window.addEventListener('DOMContentLoaded', function () {
         chatbot = new ChatBotWidget({
-          position: "bottom-right",
+          position: 'bottom-right',
           autoOpen: false,
         });
         chatbot.init();
@@ -339,7 +340,7 @@
         if (chatbot) {
           chatbot.open();
         } else {
-          alert("ChatBot 还未初始化完成，请稍后再试");
+          alert('ChatBot 还未初始化完成，请稍后再试');
         }
       }
 
@@ -358,11 +359,11 @@
       function destroyChatBot() {
         if (chatbot) {
           if (
-            confirm("确定要销毁ChatBot组件吗？销毁后需要刷新页面才能重新使用。")
+            confirm('确定要销毁ChatBot组件吗？销毁后需要刷新页面才能重新使用。')
           ) {
             chatbot.destroy();
             chatbot = null;
-            alert("ChatBot已销毁。刷新页面可以重新加载。");
+            alert('ChatBot已销毁。刷新页面可以重新加载。');
           }
         }
       }

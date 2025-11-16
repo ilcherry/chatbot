@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import type { ChatHeaderProps } from "./types";
-import ConfirmDialog from "./ConfirmDialog";
+import React, { useState } from 'react';
+import type { ChatHeaderProps } from './types';
+import ConfirmDialog from './ConfirmDialog';
 
 /**
  * 聊天头部组件
@@ -49,8 +49,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         <div className="header-tabs">
           {/* 消息 */}
           <button
-            className={`tab ${activeTab === "message" ? "active" : ""}`}
-            onClick={() => onTabChange("message")}
+            className={`tab ${activeTab === 'message' ? 'active' : ''}`}
+            onClick={() => onTabChange('message')}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M2 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4.5l-2.5 2V3z" />
@@ -58,13 +58,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
             消息
             {unreadCount > 0 && (
               <span className="unread-badge">
-                {unreadCount > 99 ? "99+" : unreadCount}
+                {unreadCount > 99 ? '99+' : unreadCount}
               </span>
             )}
           </button>
           <button
-            className={`tab ${activeTab === "help" ? "active" : ""}`}
-            onClick={() => onTabChange("help")}
+            className={`tab ${activeTab === 'help' ? 'active' : ''}`}
+            onClick={() => onTabChange('help')}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 12.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z" />

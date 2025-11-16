@@ -8,8 +8,9 @@
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Helvetica", "Arial", sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica',
+    'Arial', sans-serif;
 }
 
 /* Header Styles */
@@ -140,7 +141,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s, background 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s;
   cursor: pointer;
 }
 
@@ -563,7 +566,7 @@
 }
 
 .emoji-category.active::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

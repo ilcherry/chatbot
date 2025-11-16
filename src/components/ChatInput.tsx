@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
-import type { ChatInputProps } from "./types";
-import EmojiPicker from "./EmojiPicker";
+import React, { useState, useRef } from 'react';
+import type { ChatInputProps } from './types';
+import EmojiPicker from './EmojiPicker';
 
 /**
  * 聊天输入组件
@@ -21,7 +21,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const emojiButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       onSend();
     }
@@ -41,20 +41,20 @@ const ChatInput: React.FC<ChatInputProps> = ({
     const file = e.target.files?.[0];
     if (file && onImageUpload) {
       // 验证文件类型
-      if (!file.type.startsWith("image/")) {
-        alert("请选择图片文件");
+      if (!file.type.startsWith('image/')) {
+        alert('请选择图片文件');
         return;
       }
       // 验证文件大小（最大10MB）
       if (file.size > 10 * 1024 * 1024) {
-        alert("图片大小不能超过10MB");
+        alert('图片大小不能超过10MB');
         return;
       }
       onImageUpload(file);
     }
     // 重置input值，允许重复选择同一文件
     if (e.target) {
-      e.target.value = "";
+      e.target.value = '';
     }
   };
 
@@ -65,20 +65,20 @@ const ChatInput: React.FC<ChatInputProps> = ({
     const file = e.target.files?.[0];
     if (file && onVideoUpload) {
       // 验证文件类型
-      if (!file.type.startsWith("video/")) {
-        alert("请选择视频文件");
+      if (!file.type.startsWith('video/')) {
+        alert('请选择视频文件');
         return;
       }
       // 验证文件大小（最大50MB）
       if (file.size > 50 * 1024 * 1024) {
-        alert("视频大小不能超过50MB");
+        alert('视频大小不能超过50MB');
         return;
       }
       onVideoUpload(file);
     }
     // 重置input值
     if (e.target) {
-      e.target.value = "";
+      e.target.value = '';
     }
   };
 
@@ -90,14 +90,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
     if (file && onFileUpload) {
       // 验证文件大小（最大100MB）
       if (file.size > 100 * 1024 * 1024) {
-        alert("文件大小不能超过100MB");
+        alert('文件大小不能超过100MB');
         return;
       }
       onFileUpload(file);
     }
     // 重置input值
     if (e.target) {
-      e.target.value = "";
+      e.target.value = '';
     }
   };
 
@@ -109,7 +109,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           className="message-input"
           placeholder="输入信息..."
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={e => onChange(e.target.value)}
           onKeyPress={handleKeyPress}
         />
       </div>
@@ -172,7 +172,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
               ref={imageInputRef}
               type="file"
               accept="image/*"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleImageUpload}
             />
           </button>
@@ -205,7 +205,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
               ref={videoInputRef}
               type="file"
               accept="video/*"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleVideoUpload}
             />
           </button>
@@ -228,7 +228,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             <input
               ref={fileInputRef}
               type="file"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={handleFileUpload}
             />
           </button>

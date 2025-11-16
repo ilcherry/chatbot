@@ -1,10 +1,10 @@
-import React from "react";
-import ChatHeader from "./ChatHeader";
-import MessageList from "./MessageList";
-import ChatInput from "./ChatInput";
-import { useChatBot } from "./useChatBot";
-import type { ChatBotProps } from "./types";
-import "../ChatBot.css";
+import React from 'react';
+import ChatHeader from './ChatHeader';
+import MessageList from './MessageList';
+import ChatInput from './ChatInput';
+import { useChatBot } from './useChatBot';
+import type { ChatBotProps } from './types';
+import '../ChatBot.css';
 
 /**
  * ChatBot 主组件
@@ -53,4 +53,3 @@ const ChatBot: React.FC<ChatBotProps> = ({ onClose, onMinimize }) => {
 };
 
 export default ChatBot;
-

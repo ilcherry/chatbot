@@ -1,7 +1,7 @@
 /**
  * 消息内容类型
  */
-export type MessageContentType = "text" | "image" | "video" | "file";
+export type MessageContentType = 'text' | 'image' | 'video' | 'file';
 
 /**
  * 消息内容
@@ -19,7 +19,7 @@ export interface MessageContent {
  */
 export interface Message {
   id: number;
-  type: "bot" | "user" | "system";
+  type: 'bot' | 'user' | 'system';
   content: string | MessageContent[];
   timestamp: string;
 }
@@ -27,7 +27,7 @@ export interface Message {
 /**
  * 标签页类型
  */
-export type TabType = "message" | "help";
+export type TabType = 'message' | 'help';
 
 /**
  * ChatBot 组件属性

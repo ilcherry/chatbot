@@ -1,12 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { ChatBot } from "./components";
-import "./ChatBot.css";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ChatBot } from './components';
+import './ChatBot.css';
+import './index.css';
 
 interface ChatBotWidgetConfig {
   container?: string | HTMLElement;
-  position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
+  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
   autoOpen?: boolean;
 }
 
@@ -20,7 +20,7 @@ class ChatBotWidget {
 
   constructor(config: ChatBotWidgetConfig = {}) {
     this.config = {
-      position: "bottom-right",
+      position: 'bottom-right',
       autoOpen: false,
       ...config,
     };
@@ -33,9 +33,9 @@ class ChatBotWidget {
    * 设置消息监听器，接收来自iframe的消息
    */
   private setupMessageListener() {
-    window.addEventListener("message", (event) => {
+    window.addEventListener('message', event => {
       // 安全检查：只接受来自我们iframe的消息
-      if (event.data && event.data.type === "CHATBOT_CLOSE") {
+      if (event.data && event.data.type === 'CHATBOT_CLOSE') {
         this.close();
       }
     });
@@ -86,28 +86,28 @@ class ChatBotWidget {
    */
   private getCSSPath(): string {
     // 尝试从当前脚本路径推断CSS路径
-    const scripts = document.getElementsByTagName("script");
+    const scripts = document.getElementsByTagName('script');
     for (let i = 0; i < scripts.length; i++) {
       const src = scripts[i].src;
-      if (src && src.includes("chatbot-widget")) {
+      if (src && src.includes('chatbot-widget')) {
         // 将 chatbot-widget.iife.js 替换为 chatbot-widget.css
-        return src.replace("chatbot-widget.iife.js", "chatbot-widget.css");
+        return src.replace('chatbot-widget.iife.js', 'chatbot-widget.css');
       }
     }
     // 默认路径
-    return "./dist/chatbot-widget.css";
+    return './dist/chatbot-widget.css';
   }
 
   init() {
     // 创建容器
-    this.container = document.createElement("div");
-    this.container.id = "chatbot-widget-root";
+    this.container = document.createElement('div');
+    this.container.id = 'chatbot-widget-root';
     this.container.style.cssText = this.getContainerStyles();
     document.body.appendChild(this.container);
 
     // 创建聊天气泡按钮
-    this.button = document.createElement("div");
-    this.button.id = "chatbot-widget-button";
+    this.button = document.createElement('div');
+    this.button.id = 'chatbot-widget-button';
     this.button.style.cssText = this.getButtonStyles();
     this.button.innerHTML = this.getButtonHTML();
     this.button.onclick = () => this.toggle();
@@ -120,7 +120,7 @@ class ChatBotWidget {
   }
 
   private getContainerStyles(): string {
-    const position = this.config.position || "bottom-right";
+    const position = this.config.position || 'bottom-right';
     const baseStyles = `
       position: fixed;
       z-index: 999999;
@@ -134,17 +134,17 @@ class ChatBotWidget {
     `;
 
     const positions = {
-      "bottom-right": "bottom: 100px; right: 20px;",
-      "bottom-left": "bottom: 100px; left: 20px;",
-      "top-right": "top: 20px; right: 20px;",
-      "top-left": "top: 20px; left: 20px;",
+      'bottom-right': 'bottom: 100px; right: 20px;',
+      'bottom-left': 'bottom: 100px; left: 20px;',
+      'top-right': 'top: 20px; right: 20px;',
+      'top-left': 'top: 20px; left: 20px;',
     };
 
     return baseStyles + positions[position];
   }
 
   private getButtonStyles(): string {
-    const position = this.config.position || "bottom-right";
+    const position = this.config.position || 'bottom-right';
     const baseStyles = `
       position: fixed;
       width: 60px;
@@ -161,10 +161,10 @@ class ChatBotWidget {
     `;
 
     const positions = {
-      "bottom-right": "bottom: 20px; right: 20px;",
-      "bottom-left": "bottom: 20px; left: 20px;",
-      "top-right": "top: 20px; right: 20px;",
-      "top-left": "top: 20px; left: 20px;",
+      'bottom-right': 'bottom: 20px; right: 20px;',
+      'bottom-left': 'bottom: 20px; left: 20px;',
+      'top-right': 'top: 20px; right: 20px;',
+      'top-left': 'top: 20px; left: 20px;',
     };
 
     return baseStyles + positions[position];
@@ -185,11 +185,11 @@ class ChatBotWidget {
     if (!this.container) return;
 
     this.isOpen = true;
-    this.container.style.display = "block";
+    this.container.style.display = 'block';
 
     // 隐藏按钮
     if (this.button) {
-      this.button.style.display = "none";
+      this.button.style.display = 'none';
     }
 
     // 如果iframe还未创建，创建并加载
@@ -206,11 +206,11 @@ class ChatBotWidget {
     if (!this.container) return;
 
     // 清空容器
-    this.container.innerHTML = "";
+    this.container.innerHTML = '';
 
     // 创建iframe，使用srcdoc直接嵌入HTML内容
-    this.iframe = document.createElement("iframe");
-    this.iframe.id = "chatbot-widget-iframe";
+    this.iframe = document.createElement('iframe');
+    this.iframe.id = 'chatbot-widget-iframe';
     this.iframe.srcdoc = this.getIframeHTML();
     this.iframe.style.cssText = `
       width: 100%;
@@ -220,8 +220,8 @@ class ChatBotWidget {
     `;
 
     // 设置iframe属性以提高安全性
-    this.iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
-    this.iframe.setAttribute("title", "ChatBot Widget");
+    this.iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    this.iframe.setAttribute('title', 'ChatBot Widget');
 
     this.container.appendChild(this.iframe);
 
@@ -241,14 +241,14 @@ class ChatBotWidget {
       const iframeDocument = this.iframe.contentDocument;
 
       if (!iframeDocument) {
-        console.error("Cannot access iframe document");
+        console.error('Cannot access iframe document');
         return;
       }
 
       // 在iframe中创建React根节点
-      const rootElement = iframeDocument.getElementById("chatbot-root");
+      const rootElement = iframeDocument.getElementById('chatbot-root');
       if (!rootElement) {
-        console.error("ChatBot root element not found in iframe");
+        console.error('ChatBot root element not found in iframe');
         return;
       }
 
@@ -270,9 +270,9 @@ class ChatBotWidget {
         </React.StrictMode>
       );
 
-      console.log("ChatBot rendered successfully in iframe");
+      console.log('ChatBot rendered successfully in iframe');
     } catch (error) {
-      console.error("Failed to render ChatBot in iframe:", error);
+      console.error('Failed to render ChatBot in iframe:', error);
       this.showError();
     }
   }
@@ -281,11 +281,11 @@ class ChatBotWidget {
     if (!this.container) return;
 
     this.isOpen = false;
-    this.container.style.display = "none";
+    this.container.style.display = 'none';
 
     // 显示按钮
     if (this.button) {
-      this.button.style.display = "flex";
+      this.button.style.display = 'flex';
     }
   }
 
@@ -348,7 +348,7 @@ class ChatBotWidget {
 }
 
 // 添加样式动画
-const style = document.createElement("style");
+const style = document.createElement('style');
 style.textContent = `
   @keyframes slideIn {
     from {

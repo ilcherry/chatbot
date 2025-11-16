@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import Message from "./Message";
-import type { MessageListProps } from "./types";
+import React, { useRef, useEffect } from 'react';
+import Message from './Message';
+import type { MessageListProps } from './types';
 
 /**
  * 消息列表组件
@@ -13,7 +13,7 @@ const MessageList: React.FC<MessageListProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const MessageList: React.FC<MessageListProps> = ({
 
   return (
     <div className="chatbot-messages">
-      {messages.map((message) => (
+      {messages.map(message => (
         <Message
           key={message.id}
           message={message}
@@ -35,4 +35,3 @@ const MessageList: React.FC<MessageListProps> = ({
 };
 
 export default MessageList;
-
