@@ -59,14 +59,19 @@
   </head>
   <body>
     <div class="info">
-      <h1>🧪 ChatBot Widget - 简单测试页面</h1>
-      <p>
-        这是一个最小化的测试页面，用于验证
-        <code>process is not defined</code> 错误是否已修复。
-      </p>
-      <div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
-        <strong style="color: #1976d2;">📢 新功能：系统消息</strong>
-        <p style="margin: 8px 0 0 0; color: #1565c0; font-size: 14px;">
+      <h1>ChatBot Widget - 简单测试页面</h1>
+      <p>这是一个最小化的测试页面</p>
+      <div
+        style="
+          margin-top: 15px;
+          padding: 15px;
+          background: #e3f2fd;
+          border-left: 4px solid #2196f3;
+          border-radius: 4px;
+        "
+      >
+        <strong style="color: #1976d2">📢 新功能：系统消息</strong>
+        <p style="margin: 8px 0 0 0; color: #1565c0; font-size: 14px">
           打开聊天窗口后，您会看到居中显示的系统消息（如 "🟢 客服已上线"）。
           发送消息或点击快速操作时，也会显示系统消息提示。
         </p>
@@ -84,11 +89,23 @@
       <button onclick="testClose()">关闭聊天窗口</button>
       <button onclick="testToggle()">切换聊天窗口</button>
       <button onclick="reloadPage()">刷新页面</button>
-      <div style="margin-top: 15px; padding: 12px; background: #fff3e0; border-radius: 4px; font-size: 13px; color: #e65100;">
+      <div
+        style="
+          margin-top: 15px;
+          padding: 12px;
+          background: #fff3e0;
+          border-radius: 4px;
+          font-size: 13px;
+          color: #e65100;
+        "
+      >
         <strong>💡 提示：</strong>
-        <ul style="margin: 8px 0 0 20px; padding: 0;">
+        <ul style="margin: 8px 0 0 20px; padding: 0">
           <li>打开聊天窗口后，可以看到初始的系统消息</li>
-          <li>点击快速操作按钮（如"使用常见问题"），会先显示系统消息 "⚡ 正在为您查询..."</li>
+          <li>
+            点击快速操作按钮（如"使用常见问题"），会先显示系统消息 "⚡
+            正在为您查询..."
+          </li>
           <li>发送普通消息后，会显示系统消息 "💾 消息已保存"</li>
           <li>系统消息以灰色背景居中显示，与普通对话消息有明显区分</li>
         </ul>
@@ -159,7 +176,7 @@
 
         loadSuccess = true;
         statusDiv.innerHTML =
-          '<div class="success">✅ 成功！ChatBot Widget 已加载，没有 process.env 错误。</div>';
+          '<div class="success">✅ 成功！ChatBot Widget 已加载</div>';
       } catch (error) {
         log(`初始化失败: ${error.message}`, "error");
         statusDiv.innerHTML = `<div class="error">❌ 初始化失败: ${error.message}</div>`;
